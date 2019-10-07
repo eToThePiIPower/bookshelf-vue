@@ -33,8 +33,8 @@ authConnection.interceptors.response.use(null, error => {
   if (error.response && error.response.config && error.response.status === 401) {
     delete localStorage.csrf
     delete localStorage.signedIn
-    // redirect to signin if refresh fails
-    location.replace('/')
+    // the router isnt defined yet so we need to use an absolute path
+    location.replace('/#/signin')
     return Promise.reject(error)
   }
 })
