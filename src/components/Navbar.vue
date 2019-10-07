@@ -1,15 +1,13 @@
 <template>
   <b-navbar toggleable="md" type="light" variant="light">
-    <b-navbar-brand href="#">Bookshelf</b-navbar-brand>
+    <b-navbar-brand to="/">Bookshelf</b-navbar-brand>
 
     <b-navbar-toggle target="navbarMenus"></b-navbar-toggle>
 
     <b-collapse id="navbarMenus" is-nav>
       <!-- Site menu -->
       <b-navbar-nav>
-        <b-nav-item href="#">About</b-nav-item>
-        <b-nav-item href="#">Contact</b-nav-item>
-        <b-nav-item href="#">Help</b-nav-item>
+        <b-nav-item to="/authors">Authors</b-nav-item>
       </b-navbar-nav>
 
       <!-- User menu -->
