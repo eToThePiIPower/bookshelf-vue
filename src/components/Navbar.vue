@@ -11,7 +11,7 @@
       </b-navbar-nav>
 
       <!-- User menu -->
-      <b-navbar-nav class="ml-auto" v-if="this.isSignedIn()">
+      <b-navbar-nav class="ml-auto" v-if="this.$parent.signedIn">
         <b-nav-item href="#">Sign Out</b-nav-item>
         <b-nav-item href="#">Account</b-nav-item>
       </b-navbar-nav>
@@ -27,11 +27,6 @@
 
 <script>
 export default {
-  name: 'Navbar',
-  methods: {
-    isSignedIn () {
-      return false
-    }
-  }
+  name: 'Navbar'
 }
 </script>

@@ -10,6 +10,11 @@ import Navbar from './components/Navbar.vue'
 
 export default {
   name: 'App',
+  data () {
+    return {
+      signedIn: localStorage.signedIn
+    }
+  },
   components: {
     Navbar
   }
