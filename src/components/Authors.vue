@@ -22,7 +22,10 @@
         <b-list-group-item v-for="author in authors" :key="author.id"
           :author="author" class="d-flex justify-content-between">
           <span>{{ author.name }}</span>
-          <b-button class="btn-sm pull-right" @click.prevent="editAuthor(author)">Edit</b-button>
+          <b-button-group size="sm">
+            <b-button @click.prevent="editAuthor(author)">Edit</b-button>
+            <b-button @click.prevent="deleteAuthor(author)" variant="danger">Delete</b-button>
+          </b-button-group>
         </b-list-group-item>
       </b-list-group>
 
@@ -76,6 +79,11 @@ export default {
       this.editedAuthor = undefined
       this.$http.authed.patch(`/api/v1/authors/${author.id}`, { author: { name: author.name } })
         .catch(error => this.setError(error, 'Cannot update author'))
+    },
+    deleteAuthor (author) {
+      this.$http.authed.delete(`/api/v1/authors/${author.id}`)
+        .then(response => this.authors.splice(this.authors.indexOf(author), 1))
+        .catch(error => this.setError(error, 'Cannot delete author'))
     },
     setError (error, text) {
       this.error = (error.response && error.response.data &&
