@@ -90,7 +90,13 @@ export default {
     },
     deleteAuthor (author) {
       this.$http.authed.delete(`/api/v1/authors/${author.id}`)
-        .then(response => this.authors.splice(this.authors.indexOf(author), 1))
+        .then(response => {
+          if (response) {
+            this.authors.splice(this.authors.indexOf(author), 1)
+          } else {
+            this.setError('Error', `Could not delete Author #${author.id}: ${author.name}`)
+          }
+        })
         .catch(error => this.setError(error, 'Cannot delete author'))
     },
     setError (error, text) {
