@@ -20,6 +20,7 @@
 
       <b-list-group flush>
         <b-list-group-item v-for="author in authors" :key="author.id"
+          @click="selectAuthor(author)"
           :author="author" class="d-flex justify-content-between">
           <span>{{ author.name }}</span>
           <b-button-group size="sm">
@@ -37,7 +38,19 @@
           <b-button type="submit" variant="primary">Submit</b-button>
         </b-form>
       </b-card-body>
+    </b-card>
 
+    <hr />
+
+    <b-card no-body v-if="selectedAuthorBooks">
+      <b-card-header header-tag="h2" class="h6">
+        Your books by {{selectedAuthor.name}}
+      </b-card-header>
+      <b-list-group flush>
+        <b-list-group-item v-for="book in selectedAuthorBooks" :key="book.id">
+          {{ book.title }}
+        </b-list-group-item>
+      </b-list-group>
     </b-card>
   </b-container>
 </template>
@@ -50,6 +63,8 @@ export default {
       authors: [],
       newAuthor: {},
       editedAuthor: undefined,
+      selectedAuthor: undefined,
+      selectedAuthorBooks: undefined,
       error: ''
     }
   },
@@ -98,6 +113,11 @@ export default {
           }
         })
         .catch(error => this.setError(error, 'Cannot delete author'))
+    },
+    selectAuthor (author) {
+      this.selectedAuthor = author
+      this.$http.authed.get(`/api/v1/authors/${author.id}/books`)
+        .then(response => { this.selectedAuthorBooks = response.data })
     },
     setError (error, text) {
       this.error = (error.response && error.response.data &&
