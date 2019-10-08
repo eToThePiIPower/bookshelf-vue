@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Signin from '@/components/Signin'
-import Signup from '@/components/Signup'
-import Authors from '@/components/Authors'
-import Books from '@/components/Books'
+import Signin from '@/views/Signin'
+import Signup from '@/views/Signup'
+import AuthorsView from '@/views/AuthorsView'
+import BooksView from '@/views/BooksView'
 
 Vue.use(Router)
 
@@ -12,7 +12,7 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Books
+      component: BooksView
     },
     {
       path: '/signin',
@@ -26,13 +26,13 @@ export default new Router({
     },
     {
       path: '/authors',
-      name: 'Authors',
-      component: Authors
+      name: 'AuthorsView',
+      component: AuthorsView
     },
     {
       path: '/books',
-      name: 'Books',
-      component: Books
+      name: 'BooksView',
+      component: BooksView
     }
   ]
 })

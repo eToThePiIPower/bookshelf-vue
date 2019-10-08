@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'Signup',
+  name: 'SignupView',
   data () {
     return {
       email: '',

@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  name: 'Authors',
+  name: 'AuthorsView',
   data () {
     return {
       authors: [],

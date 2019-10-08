@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: 'Books',
+  name: 'BooksView',
   data () {
     return {
       authors: [],
