@@ -5,6 +5,7 @@
     </b-alert>
 
     <b-card no-body header="Authors" header-tag="h1" header-class="h3">
+
       <b-card-body>
         <b-button v-b-toggle.newAuthorForm block>New Author</b-button>
         <b-collapse id="newAuthorForm" class="mt-3">
@@ -12,15 +13,28 @@
             <b-form-group id="name-group" label="Name" label-for="name">
               <b-form-input id="name" type="text" v-model="newAuthor.name" required />
             </b-form-group>
-
             <b-button type="submit" variant="primary">Submit</b-button>
-            </b-form>
+          </b-form>
         </b-collapse>
       </b-card-body>
 
       <b-list-group flush>
-        <b-list-group-item v-for="author in authors" :key="author.id" :author="author">{{ author.name }}</b-list-group-item>
+        <b-list-group-item v-for="author in authors" :key="author.id"
+          :author="author" class="d-flex justify-content-between">
+          <span>{{ author.name }}</span>
+          <b-button class="btn-sm pull-right" @click.prevent="editAuthor(author)">Edit</b-button>
+        </b-list-group-item>
       </b-list-group>
+
+      <b-card-body v-if="editedAuthor">
+        <b-form @submit.prevent="updateAuthor(editedAuthor)">
+          <b-form-group id="editedName-group" label="Name" label-for="editedName">
+            <b-form-input ref="editedName" type="text" v-model="editedAuthor.name" required />
+          </b-form-group>
+          <b-button type="submit" variant="primary">Submit</b-button>
+        </b-form>
+      </b-card-body>
+
     </b-card>
   </b-container>
 </template>
@@ -32,6 +46,7 @@ export default {
     return {
       authors: [],
       newAuthor: {},
+      editedAuthor: undefined,
       error: ''
     }
   },
@@ -52,6 +67,15 @@ export default {
           this.newAuthor = {}
         })
         .catch(error => this.setError(error, 'Cannot create record'))
+    },
+    editAuthor (author) {
+      this.editedAuthor = author
+      this.$refs.editedName.focus()
+    },
+    updateAuthor (author) {
+      this.editedAuthor = undefined
+      this.$http.authed.patch(`/api/v1/authors/${author.id}`, { author: { name: author.name } })
+        .catch(error => this.setError(error, 'Cannot update author'))
     },
     setError (error, text) {
       this.error = (error.response && error.response.data &&
