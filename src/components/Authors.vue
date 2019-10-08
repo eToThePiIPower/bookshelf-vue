@@ -24,7 +24,7 @@
           <span>{{ author.name }}</span>
           <b-button-group size="sm">
             <b-button @click.prevent="editAuthor(author)">Edit</b-button>
-            <b-button @click.prevent="deleteAuthor(author)" variant="danger">Delete</b-button>
+            <b-button @click.prevent="confirmDeleteAuthor(author)" variant="danger">Delete</b-button>
           </b-button-group>
         </b-list-group-item>
       </b-list-group>
@@ -80,9 +80,23 @@ export default {
       this.$http.authed.patch(`/api/v1/authors/${author.id}`, { author: { name: author.name } })
         .catch(error => this.setError(error, 'Cannot update author'))
     },
+    confirmDeleteAuthor (author) {
+      this.$bvModal.msgBoxConfirm(`Do you really want to delete Author #${author.id}: ${author.name}`)
+        .then(value => {
+          if (value) {
+            this.deleteAuthor(author)
+          }
+        })
+    },
     deleteAuthor (author) {
       this.$http.authed.delete(`/api/v1/authors/${author.id}`)
-        .then(response => this.authors.splice(this.authors.indexOf(author), 1))
+        .then(response => {
+          if (response) {
+            this.authors.splice(this.authors.indexOf(author), 1)
+          } else {
+            this.setError('Error', `Could not delete Author #${author.id}: ${author.name}`)
+          }
+        })
         .catch(error => this.setError(error, 'Cannot delete author'))
     },
     setError (error, text) {
