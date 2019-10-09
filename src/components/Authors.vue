@@ -1,7 +1,8 @@
 <template>
   <b-card no-body header="Authors" header-tag="h1" header-class="h3">
     <b-list-group flush>
-      <b-list-group-item v-for="author in authors" :key="author.id" :author="author">
+      <b-list-group-item v-for="author in authors" @click="selectAuthor(author)"
+        :key="author.id" :author="author">
 
         <div class="d-flex justify-content-between">
           <span>{{ author.name }}</span>
@@ -11,7 +12,8 @@
           </b-button-group>
         </div>
 
-        <EditAuthor v-if="editedAuthor == author" :editedAuthor="editedAuthor" />
+        <EditAuthor v-if="editedAuthor == author" :editedAuthor="editedAuthor"
+          @setError="setError" />
 
       </b-list-group-item>
     </b-list-group>
@@ -56,6 +58,12 @@ export default {
           }
         })
         .catch(error => this.setError(error, 'Cannot delete author'))
+    },
+    selectAuthor (author) {
+      this.$emit('authorSelected', author)
+    },
+    setError (error, text) {
+      this.$emit('setError', error, text)
     }
   }
 }

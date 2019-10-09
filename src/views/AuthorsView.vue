@@ -1,8 +1,13 @@
 <template>
   <b-container class="mt-5">
+    <b-alert variant="warning" v-model="error" v-if="error" dismissible fade>
+      {{ error }}
+    </b-alert>
+
     <NewAuthor />
     <hr />
-    <Authors :authors="this.authors" />
+    <Authors :authors="this.authors" @authorSelected="selectAuthor"
+     @setError="setError" />
     <hr />
     <Books v-if="selectedAuthor" :books="selectedAuthorBooks"
       :header="'Your Books by ' + selectedAuthor.name" :header_tag="'h2'" :header_class="'h5'"
@@ -20,7 +25,6 @@ export default {
   data () {
     return {
       authors: [],
-      editedAuthor: undefined,
       selectedAuthor: undefined,
       selectedAuthorBooks: undefined,
       error: ''
@@ -33,34 +37,6 @@ export default {
       .catch(error => this.setError(error, 'Something went wrong'))
   },
   methods: {
-    editAuthor (author) {
-      this.editedAuthor = author
-      this.$refs.editedName.focus()
-    },
-    updateAuthor (author) {
-      this.editedAuthor = undefined
-      this.$http.authed.patch(`/api/v1/authors/${author.id}`, { author: { name: author.name } })
-        .catch(error => this.setError(error, 'Cannot update author'))
-    },
-    confirmDeleteAuthor (author) {
-      this.$bvModal.msgBoxConfirm(`Do you really want to delete Author #${author.id}: ${author.name}`)
-        .then(value => {
-          if (value) {
-            this.deleteAuthor(author)
-          }
-        })
-    },
-    deleteAuthor (author) {
-      this.$http.authed.delete(`/api/v1/authors/${author.id}`)
-        .then(response => {
-          if (response) {
-            this.authors.splice(this.authors.indexOf(author), 1)
-          } else {
-            this.setError('Error', `Could not delete Author #${author.id}: ${author.name}`)
-          }
-        })
-        .catch(error => this.setError(error, 'Cannot delete author'))
-    },
     selectAuthor (author) {
       this.selectedAuthor = author
       this.$http.authed.get(`/api/v1/authors/${author.id}/books`)
