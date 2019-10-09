@@ -1,5 +1,6 @@
 <template lang="html">
-  <b-card no-body header="Books" header-tag="h1" header-class="h3">
+  <b-card no-body v-bind:header="this.header"
+    :header-tag="header_tag" :header-class="header_class">
 
     <b-list-group flush>
       <b-list-group-item v-for="book in books" :key="book.id" :book="book">
@@ -35,8 +36,19 @@ export default {
       default: false
     },
     books: {
-      type: Array,
-      required: true
+      type: Array
+    },
+    header: {
+      type: String,
+      default: 'Books'
+    },
+    header_tag: {
+      type: String,
+      default: 'h1'
+    },
+    header_class: {
+      type: String,
+      default: 'h3'
     }
   },
   data () {
