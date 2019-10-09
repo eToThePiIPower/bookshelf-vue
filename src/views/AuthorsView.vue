@@ -42,20 +42,15 @@
 
     <hr />
 
-    <b-card no-body v-if="selectedAuthorBooks">
-      <b-card-header header-tag="h2" class="h6">
-        Your books by {{selectedAuthor.name}}
-      </b-card-header>
-      <b-list-group flush>
-        <b-list-group-item v-for="book in selectedAuthorBooks" :key="book.id">
-          {{ book.title }}
-        </b-list-group-item>
-      </b-list-group>
-    </b-card>
+    <Books v-if="selectedAuthor" :books="selectedAuthorBooks"
+      :header="'Your Books by ' + selectedAuthor.name" :header_tag="'h2'" :header_class="'h5'"
+    />
   </b-container>
 </template>
 
 <script>
+import Books from '../components/Books'
+
 export default {
   name: 'AuthorsView',
   data () {
@@ -68,6 +63,7 @@ export default {
       error: ''
     }
   },
+  components: { Books },
   created () {
     this.$http.plain.get('/api/v1/authors')
       .then(response => { this.authors = response.data })
