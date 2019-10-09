@@ -1,6 +1,6 @@
 <template>
   <b-container class="mt-5">
-    <Books :books="this.books" />
+    <Books :books="this.books" :allowEdit=true />
     <hr class="my-4" />
     <NewBook />
   </b-container>
