@@ -4,20 +4,11 @@
       {{ error }}
     </b-alert>
 
+    <NewAuthor />
+
+    <hr />
+
     <b-card no-body header="Authors" header-tag="h1" header-class="h3">
-
-      <b-card-body>
-        <b-button v-b-toggle.newAuthorForm block>New Author</b-button>
-        <b-collapse id="newAuthorForm" class="mt-3">
-          <b-form @submit.prevent="addAuthor">
-            <b-form-group id="name-group" label="Name" label-for="name">
-              <b-form-input id="name" type="text" v-model="newAuthor.name" required />
-            </b-form-group>
-            <b-button type="submit" variant="primary">Submit</b-button>
-          </b-form>
-        </b-collapse>
-      </b-card-body>
-
       <b-list-group flush>
         <b-list-group-item v-for="author in authors" :key="author.id"
           @click="selectAuthor(author)"
@@ -50,38 +41,26 @@
 
 <script>
 import Books from '../components/Books'
+import NewAuthor from '../components/NewAuthor'
 
 export default {
   name: 'AuthorsView',
   data () {
     return {
       authors: [],
-      newAuthor: {},
       editedAuthor: undefined,
       selectedAuthor: undefined,
       selectedAuthorBooks: undefined,
       error: ''
     }
   },
-  components: { Books },
+  components: { Books, NewAuthor },
   created () {
     this.$http.plain.get('/api/v1/authors')
       .then(response => { this.authors = response.data })
       .catch(error => this.setError(error, 'Something went wrong'))
   },
   methods: {
-    addAuthor () {
-      const value = this.newAuthor
-      if (!value) {
-        return
-      }
-      this.$http.authed.post('/api/v1/authors', { author: { name: this.newAuthor.name } })
-        .then(response => {
-          this.authors.push(response.data)
-          this.newAuthor = {}
-        })
-        .catch(error => this.setError(error, 'Cannot create record'))
-    },
     editAuthor (author) {
       this.editedAuthor = author
       this.$refs.editedName.focus()
