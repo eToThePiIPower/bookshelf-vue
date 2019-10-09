@@ -1,38 +1,9 @@
 <template>
   <b-container class="mt-5">
-    <b-alert variant="warning" v-model="error" v-if="error" dismissible fade>
-      {{ error }}
-    </b-alert>
-
     <NewAuthor />
-
     <hr />
-
-    <b-card no-body header="Authors" header-tag="h1" header-class="h3">
-      <b-list-group flush>
-        <b-list-group-item v-for="author in authors" :key="author.id"
-          @click="selectAuthor(author)"
-          :author="author" class="d-flex justify-content-between">
-          <span>{{ author.name }}</span>
-          <b-button-group size="sm">
-            <b-button @click.prevent="editAuthor(author)">Edit</b-button>
-            <b-button @click.prevent="confirmDeleteAuthor(author)" variant="danger">Delete</b-button>
-          </b-button-group>
-        </b-list-group-item>
-      </b-list-group>
-
-      <b-card-body v-if="editedAuthor">
-        <b-form @submit.prevent="updateAuthor(editedAuthor)">
-          <b-form-group id="editedName-group" label="Name" label-for="editedName">
-            <b-form-input ref="editedName" type="text" v-model="editedAuthor.name" required />
-          </b-form-group>
-          <b-button type="submit" variant="primary">Submit</b-button>
-        </b-form>
-      </b-card-body>
-    </b-card>
-
+    <Authors :authors="this.authors" />
     <hr />
-
     <Books v-if="selectedAuthor" :books="selectedAuthorBooks"
       :header="'Your Books by ' + selectedAuthor.name" :header_tag="'h2'" :header_class="'h5'"
     />
@@ -41,6 +12,7 @@
 
 <script>
 import Books from '../components/Books'
+import Authors from '../components/Authors'
 import NewAuthor from '../components/NewAuthor'
 
 export default {
@@ -54,7 +26,7 @@ export default {
       error: ''
     }
   },
-  components: { Books, NewAuthor },
+  components: { Authors, Books, NewAuthor },
   created () {
     this.$http.plain.get('/api/v1/authors')
       .then(response => { this.authors = response.data })
