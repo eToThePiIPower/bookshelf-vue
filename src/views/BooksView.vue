@@ -1,8 +1,14 @@
 <template>
   <b-container class="mt-5">
-    <Books :books="this.books" :allowEdit=true />
-    <hr class="my-4" />
-    <NewBook />
+    <div class="row">
+      <div class="col-md-12 my-4">
+        <NewBook />
+      </div>
+
+      <main class="col-md-12">
+        <Books :books="this.books" :allowEdit=true />
+      </main>
+    </div>
   </b-container>
 </template>
 
