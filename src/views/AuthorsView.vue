@@ -1,17 +1,21 @@
 <template>
-  <b-container class="mt-5">
-    <b-alert variant="warning" v-model="error" v-if="error" dismissible fade>
-      {{ error }}
-    </b-alert>
+  <b-container class="mt-4">
+    <div class="row">
+      <div class="col-md-12 my-4">
+        <NewAuthor />
+      </div>
 
-    <NewAuthor />
-    <hr />
-    <Authors :authors="this.authors" @authorSelected="selectAuthor"
-     @setError="setError" />
-    <hr />
-    <Books v-if="selectedAuthor" :books="selectedAuthorBooks"
-      :header="'Your Books by ' + selectedAuthor.name" :header_tag="'h2'" :header_class="'h5'"
-    />
+      <main class="col-md-6">
+        <Authors :authors="this.authors" @authorSelected="selectAuthor"
+          @setError="setError" />
+      </main>
+
+      <aside class="col-md-6">
+        <Books v-if="selectedAuthor" :books="selectedAuthorBooks"
+          :header="'Your Books by ' + selectedAuthor.name" :header_tag="'h2'" :header_class="'h5'"
+        />
+      </aside>
+    </div>
   </b-container>
 </template>
 
