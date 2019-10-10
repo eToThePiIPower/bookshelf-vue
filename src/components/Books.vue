@@ -17,7 +17,7 @@
         </div>
 
         <!-- editForm -->
-        <EditBook v-if="allowEdit && editedBook == book" :editedBook="editedBook" />
+        <EditBook v-if="allowEdit && editedBook == book" :editedBook="editedBook" @setError="setError" />
         <!-- /editForm -->
 
       </b-list-group-item>
@@ -62,6 +62,9 @@ export default {
   methods: {
     editBook (book) {
       this.editedBook = book
+    },
+    setError (error, text) {
+      this.$emit('setError', error, text)
     }
   }
 }

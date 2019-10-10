@@ -43,6 +43,9 @@ export default {
         { book: { title: book.title, author_id: book.author.id } }
       )
         .catch(error => this.setError(error, 'Cannot update book'))
+    },
+    setError (error, text) {
+      this.$emit('setError', error, text)
     }
   }
 }

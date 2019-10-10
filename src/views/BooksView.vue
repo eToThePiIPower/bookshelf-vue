@@ -2,11 +2,11 @@
   <b-container class="mt-5">
     <div class="row">
       <div class="col-md-12 my-4">
-        <NewBook />
+        <NewBook @setError="setError" />
       </div>
 
       <main class="col-md-12">
-        <Books :books="this.books" :allowEdit=true />
+        <Books :books="this.books" :allowEdit=true @setError="setError" />
       </main>
     </div>
   </b-container>
@@ -34,9 +34,7 @@ export default {
   },
   methods: {
     setError (error, text) {
-      var newError = (error.response && error.response.data &&
-        error.response.data.error) || text
-      console.log(newError)
+      this.$emit('setError', error, text)
     }
   }
 }

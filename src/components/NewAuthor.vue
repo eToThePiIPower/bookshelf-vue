@@ -31,7 +31,7 @@ export default {
           this.$parent.authors.push(response.data)
           this.newAuthor = {}
         })
-        .catch(error => this.setError(error, 'Cannot create record'))
+        .catch(error => this.setError(error, 'Cannot create author'))
     }
   }
 }
