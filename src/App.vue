@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <Navbar/>
-    <router-view/>
+
+    <b-alert variant="warning" v-model="error" v-if="error" dismissible fade>
+      {{ error }}
+    </b-alert>
+
+    <router-view @setError="setError" />
   </div>
 </template>
 
@@ -12,11 +17,18 @@ export default {
   name: 'App',
   data () {
     return {
-      signedIn: localStorage.signedIn
+      signedIn: localStorage.signedIn,
+      error: ''
     }
   },
   components: {
     Navbar
+  },
+  methods: {
+    setError (error, text) {
+      this.error = (error.response && error.response.data &&
+        error.response.data.error) || text
+    }
   }
 }
 </script>

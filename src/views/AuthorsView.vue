@@ -43,8 +43,7 @@ export default {
         .then(response => { this.selectedAuthorBooks = response.data })
     },
     setError (error, text) {
-      this.error = (error.response && error.response.data &&
-        error.response.data.error) || text
+      this.$emit('setError', error, text)
     }
   }
 }
