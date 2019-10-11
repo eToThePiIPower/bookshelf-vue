@@ -1,6 +1,6 @@
 {
   "name": "bookshelf-vue",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "A Vue.js frontend app for BookshelfApi.",
   "author": "Charles Beynon <eToThePiIPower@gmail.com>",
   "private": true,
