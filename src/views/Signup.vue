@@ -1,9 +1,5 @@
 <template>
   <b-container class="mt-5">
-    <b-alert variant="warning" v-model="error" v-if="error" dismissible fade>
-      {{ error }}
-    </b-alert>
-
     <b-card header="Sign Up" header-tag="h1" header-class="h3">
       <b-form @submit.prevent="signup">
         <b-form-group id="email-group" label="Email" label-for="email">
@@ -27,13 +23,12 @@
 
 <script>
 export default {
-  name: 'Signup',
+  name: 'SignupView',
   data () {
     return {
       email: '',
       password: '',
-      passwordConfirmation: '',
-      error: ''
+      passwordConfirmation: ''
     }
   },
   created () {
@@ -62,11 +57,10 @@ export default {
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.$parent.signedIn = true
-      this.error = ''
       this.$router.replace('/authors')
     },
     signupFailed (error) {
-      this.error = (error.response && error.response.data && error.response.data.error) || ''
+      this.setError(error, 'Could not sign up')
       delete localStorage.csrf
       delete localStorage.signedIn
     }
