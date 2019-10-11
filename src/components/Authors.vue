@@ -61,9 +61,6 @@ export default {
     },
     selectAuthor (author) {
       this.$emit('authorSelected', author)
-    },
-    setError (error, text) {
-      this.$emit('setError', error, text)
     }
   }
 }

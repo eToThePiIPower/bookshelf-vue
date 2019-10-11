@@ -1,9 +1,5 @@
 <template>
   <b-container class="mt-5">
-    <b-alert variant="warning" v-model="error" v-if="error" dismissible fade>
-      {{ error }}
-    </b-alert>
-
     <b-card header="Sign In" header-tag="h1" header-class="h3">
       <b-form @submit.prevent="signin">
         <b-form-group id="email-group" label="Email" label-for="email">
@@ -27,8 +23,7 @@ export default {
   data () {
     return {
       email: '',
-      password: '',
-      error: ''
+      password: ''
     }
   },
   created () {
@@ -48,11 +43,10 @@ export default {
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.$parent.signedIn = true
-      this.error = ''
       this.$router.replace('/authors')
     },
     signinFailed (error) {
-      this.error = (error.response && error.response.data && error.response.data.error) || ''
+      this.setError(error, 'Could not sign in')
       delete localStorage.csrf
       delete localStorage.signedIn
     },

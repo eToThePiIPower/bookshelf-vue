@@ -62,9 +62,6 @@ export default {
   methods: {
     editBook (book) {
       this.editedBook = book
-    },
-    setError (error, text) {
-      this.$emit('setError', error, text)
     }
   }
 }
