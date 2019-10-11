@@ -21,9 +21,6 @@ export default {
       this.$parent.editedAuthor = undefined
       this.$http.authed.patch(`/api/v1/authors/${author.id}`, { author: { name: author.name } })
         .catch(error => this.setError(error, 'Cannot update author'))
-    },
-    setError (error, text) {
-      this.$emit('setError', error, text)
     }
   }
 }

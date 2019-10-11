@@ -2,7 +2,7 @@
   <b-container class="mt-4">
     <div class="row">
       <div class="col-md-12 my-4">
-        <NewAuthor />
+        <NewAuthor @setError="setError" />
       </div>
 
       <main class="col-md-6">
@@ -45,9 +45,6 @@ export default {
       this.selectedAuthor = author
       this.$http.authed.get(`/api/v1/authors/${author.id}/books`)
         .then(response => { this.selectedAuthorBooks = response.data })
-    },
-    setError (error, text) {
-      this.$emit('setError', error, text)
     }
   }
 }

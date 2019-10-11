@@ -37,6 +37,9 @@ authConnection.interceptors.response.use(null, error => {
     location.replace('/#/signin')
     return Promise.reject(error)
   }
+  if (error.response && error.response.config && error.response.status >= 400 && error.response.status < 500) {
+    return Promise.reject(error)
+  }
 })
 
 export { plainConnection, authConnection }

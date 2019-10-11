@@ -47,9 +47,6 @@ export default {
           this.newBook = {}
         })
         .catch(error => this.setError(error, 'Cannot create book'))
-    },
-    setError (error, text) {
-      this.$emit('setError', error, text)
     }
   }
 }

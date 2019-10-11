@@ -33,9 +33,6 @@ export default {
       .catch(error => this.setError(error, 'Something went wrong'))
   },
   methods: {
-    setError (error, text) {
-      this.$emit('setError', error, text)
-    }
   }
 }
 </script>

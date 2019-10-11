@@ -17,6 +17,17 @@ Vue.use(VueAxios, {
   authed: authConnection
 })
 
+Vue.mixin({
+  methods: {
+    isEmpty (obj) {
+      return Object.keys(obj).length === 0
+    },
+    setError (error, text) {
+      this.$emit('setError', error, text)
+    }
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
