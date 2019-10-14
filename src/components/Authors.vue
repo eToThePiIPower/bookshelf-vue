@@ -13,7 +13,7 @@
         </div>
 
         <EditAuthor v-if="editedAuthor == author" :editedAuthor="editedAuthor"
-          @setError="setError" />
+          @addFlash="addFlash" />
 
       </b-list-group-item>
     </b-list-group>
@@ -53,11 +53,12 @@ export default {
         .then(response => {
           if (response) {
             this.$parent.authors.splice(this.authors.indexOf(author), 1)
+            this.addFlash('Deleted Author', author, 'warning')
           } else {
-            this.setError('Error', `Could not delete Author #${author.id}: ${author.name}`)
+            this.addError('Error', `Could not delete Author #${author.id}: ${author.name}`)
           }
         })
-        .catch(error => this.setError(error, 'Cannot delete author'))
+        .catch(error => this.addError(error, 'Cannot delete author'))
     },
     selectAuthor (author) {
       this.$emit('authorSelected', author)

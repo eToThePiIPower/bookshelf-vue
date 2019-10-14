@@ -46,7 +46,7 @@ export default {
       this.$router.replace('/authors')
     },
     signinFailed (error) {
-      this.setError(error, 'Could not sign in')
+      this.addError(error, 'Could not sign in')
       delete localStorage.csrf
       delete localStorage.signedIn
     },

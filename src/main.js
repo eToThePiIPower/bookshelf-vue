@@ -22,8 +22,12 @@ Vue.mixin({
     isEmpty (obj) {
       return Object.keys(obj).length === 0
     },
-    setError (error, text) {
-      this.$emit('setError', error, text)
+    addError (error, text, variant = 'danger') {
+      var details = (error.response && error.response.data && error.response.data.error)
+      this.$emit('addFlash', text, details, variant)
+    },
+    addFlash (message, object, variant = 'info') {
+      this.$emit('addFlash', message, object, variant)
     }
   }
 })

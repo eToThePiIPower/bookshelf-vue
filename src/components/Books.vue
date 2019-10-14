@@ -17,7 +17,7 @@
         </div>
 
         <!-- editForm -->
-        <EditBook v-if="allowEdit && editedBook == book" :editedBook="editedBook" @setError="setError" />
+        <EditBook v-if="allowEdit && editedBook == book" :editedBook="editedBook" @addFlash="addFlash" />
         <!-- /editForm -->
 
       </b-list-group-item>

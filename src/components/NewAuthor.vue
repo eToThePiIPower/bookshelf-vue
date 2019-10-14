@@ -29,9 +29,10 @@ export default {
       this.$http.authed.post('/api/v1/authors', { author: { name: this.newAuthor.name } })
         .then(response => {
           this.$parent.authors.push(response.data)
+          this.addFlash('Added author', this.newAuthor)
           this.newAuthor = {}
         })
-        .catch(error => this.setError(error, 'Cannot create author'))
+        .catch(error => this.addError(error, 'Cannot create author'))
     }
   }
 }

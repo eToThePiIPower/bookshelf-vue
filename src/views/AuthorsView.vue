@@ -2,12 +2,12 @@
   <b-container class="mt-4">
     <div class="row">
       <div class="col-md-12 my-4">
-        <NewAuthor @setError="setError" />
+        <NewAuthor @addFlash="addFlash" />
       </div>
 
       <main class="col-md-6">
         <Authors :authors="this.authors" @authorSelected="selectAuthor"
-          @setError="setError" />
+          @addFlash="addFlash" />
       </main>
 
       <aside class="col-md-6">
@@ -38,7 +38,7 @@ export default {
   created () {
     this.$http.plain.get('/api/v1/authors')
       .then(response => { this.authors = response.data })
-      .catch(error => this.setError(error, 'Something went wrong'))
+      .catch(error => this.addError(error, 'Something went wrong'))
   },
   methods: {
     selectAuthor (author) {

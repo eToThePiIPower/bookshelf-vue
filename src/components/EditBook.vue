@@ -34,7 +34,7 @@ export default {
   created () {
     this.$http.plain.get('/api/v1/authors')
       .then(response => { this.authors = response.data })
-      .catch(error => this.setError(error, 'Something went wrong'))
+      .catch(error => this.addError(error, 'Something went wrong'))
   },
   methods: {
     updateBook (book) {
@@ -42,7 +42,7 @@ export default {
       this.$http.authed.patch(`/api/v1/books/${book.id}`,
         { book: { title: book.title, author_id: book.author.id } }
       )
-        .catch(error => this.setError(error, 'Cannot update book'))
+        .catch(error => this.addError(error, 'Cannot update book'))
     }
   }
 }

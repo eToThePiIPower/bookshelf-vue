@@ -33,7 +33,7 @@ export default {
   created () {
     this.$http.plain.get('/api/v1/authors')
       .then(response => { this.authors = response.data })
-      .catch(error => this.setError(error, 'Something went wrong'))
+      .catch(error => this.addError(error, 'Something went wrong'))
   },
   methods: {
     addBook () {
@@ -46,7 +46,7 @@ export default {
           this.$parent.books.push(response.data)
           this.newBook = {}
         })
-        .catch(error => this.setError(error, 'Cannot create book'))
+        .catch(error => this.addError(error, 'Cannot create book'))
     }
   }
 }
