@@ -2,7 +2,7 @@
   <b-container class="mt-5">
     <div class="row">
       <div class="col-md-12 my-4">
-        <NewBook @addFlash="addFlasaddFlash" />
+        <NewBook @addFlash="addFlash" />
       </div>
 
       <main class="col-md-12">
