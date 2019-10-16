@@ -5,7 +5,7 @@
       <b-form @submit.prevent="processForm">
         <b-form-group id="isbn-group" label="ISBN" label-for="isbn">
           <b-input-group>
-            <b-form-input id="isbn" type="text" v-model="newBook.isbn" />
+            <b-form-input ref="isbn" type="text" v-model="newBook.isbn" v-on:keydown.enter="fillInFromISBN" />
               <b-input-group-append>
                 <b-button variant="primary" @click="fillInFromISBN">Lookup ISBN</b-button>
               </b-input-group-append>
@@ -72,8 +72,10 @@ export default {
     addBook () {
       this.$http.authed.post('/api/v1/books', { book: { title: this.newBook.title, author_id: this.newBook.author } })
         .then(response => {
+          this.addFlash('Added new book', this.newBook)
           this.$parent.books.push(response.data)
           this.newBook = {}
+          this.$refs.isbn.focus()
         })
         .catch(error => {
           this.addError(error, 'Cannot create book')
@@ -82,6 +84,7 @@ export default {
     addAuthorThenBook () {
       this.$http.authed.post('/api/v1/authors', { author: { name: this.newAuthor } })
         .then(response => {
+          this.addFlash('Added new Author', this.newAuthor)
           this.newBook.author = response.data.id
           this.newAuthor = ''
           this.addBook()
