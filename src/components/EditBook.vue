@@ -5,7 +5,7 @@
     </b-form-group>
 
     <b-form-group id="editedYear-group" label="Year" label-for="editedYear" class="col-md-3">
-      <b-form-input ref="editedYear" type="text" v-model="editedBook.year" />
+      <b-form-input ref="editedYear" type="date" v-model="editedBook.year" />
     </b-form-group>
 
     <b-form-group id="editedISBN-group" label="ISBN" label-for="editedISBN" class="col-md-3">

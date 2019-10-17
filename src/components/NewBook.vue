@@ -17,7 +17,7 @@
         </b-form-group>
 
         <b-form-group id="year-group" label="Year" label-for="year">
-          <b-form-input id="year" type="text" v-model="newBook.year" required />
+          <b-form-input id="year" type="date" v-model="newBook.year" required />
         </b-form-group>
 
         <b-form-group id="author-group" label="Author" label-for="author">
