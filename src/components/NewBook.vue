@@ -70,7 +70,12 @@ export default {
       }
     },
     addBook () {
-      this.$http.authed.post('/api/v1/books', { book: { title: this.newBook.title, author_id: this.newBook.author } })
+      this.$http.authed.post('/api/v1/books', { book: {
+        title: this.newBook.title,
+        isbn: this.newBook.isbn,
+        year: this.newBook.year,
+        author_id: this.newBook.author
+      }})
         .then(response => {
           this.addFlash('Added new book', this.newBook)
           this.$parent.books.push(response.data)
