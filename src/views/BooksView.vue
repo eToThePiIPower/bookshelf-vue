@@ -5,7 +5,7 @@
         <NewBook @addFlash="addFlash" />
       </div>
 
-      <main class="col-md-12">
+      <main class="col-md-12 mb-5">
         <Books :books="this.books" :allowEdit=true @addFlash="addFlash" />
       </main>
     </div>
