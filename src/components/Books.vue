@@ -13,12 +13,11 @@
           </span>
           <b-button-group v-if="allowEdit" size="sm" class="ml-auto">
             <b-button @click.prevent="editBook(book)">Edit</b-button>
+            <b-button @click.prevent="confirmDeleteBook(book)" variant="danger">Delete</b-button>
           </b-button-group>
         </div>
 
-        <!-- editForm -->
         <EditBook v-if="allowEdit && editedBook == book" :editedBook="editedBook" @addFlash="addFlash" />
-        <!-- /editForm -->
 
       </b-list-group-item>
     </b-list-group>
@@ -62,6 +61,26 @@ export default {
   methods: {
     editBook (book) {
       this.editedBook = book
+    },
+    confirmDeleteBook (book) {
+      this.$bvModal.msgBoxConfirm(`Do you really want to delete Book #${book.id}: ${book.title}`)
+        .then(value => {
+          if (value) {
+            this.deleteBook(book)
+          }
+        })
+    },
+    deleteBook (book) {
+      this.$http.authed.delete(`/api/v1/books/${book.id}`)
+        .then(response => {
+          if (response) {
+            this.$parent.books.splice(this.books.indexOf(book), 1)
+            this.addFlash('Deleted Book', book, 'warning')
+          } else {
+            this.addError('Error', `Could not delete Book #${book.id}: ${book.name}`)
+          }
+        })
+        .catch(error => this.addError(error, 'Cannot delete Book'))
     }
   }
 }
